@@ -61,4 +61,14 @@ class RoleController extends Controller
         return Redirect::back()->with('success','Successfully revoke permission to role');
 
     }
+
+    public function destory(Role $role){
+        try{
+            // $role->delete();
+            dd($role);
+            return Redirect::back()->with('success' , 'Deleted Role Successfully' );
+           }catch(Exception $e){
+                return Redirect::back()->with('error' , $e->getMessage());
+           };
+    }
 }

@@ -105,9 +105,14 @@
                                 {{ $role->updated_at }}
                             </td>
                             <td>
+                                <form action="{{ route('roles.destory',$role) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <x-confirm-modal isDeleteModal="true" text="Are you sure to delete this role!"></x-confirm-modal>
+                                </form>
                                <div class=" flex items-center justify-center gap-3">
                                 <x-icon-button href="{{ route('roles.details',  $role) }}"><img class="w-6" src="{{ asset('images/edit-icon.svg') }}" alt="edti"></x-icon-button>
-                                <x-icon-button><img class="w-6" src="{{ asset('images/delete-icon.svg') }}" alt="edti"></x-icon-button>
+                                <x-icon-button data-modal-target="popup-modal" data-modal-toggle="popup-modal"><img class="w-6 cursor-pointer" src="{{ asset('images/delete-icon.svg') }}" alt="edti"></x-icon-button>
                                </div>
                             </td>
                         </tr>

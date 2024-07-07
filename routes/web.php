@@ -29,6 +29,7 @@ Route::middleware(['auth','verified'])->name('roles.')->prefix('roles')->group(f
     Route::post('/create', [RoleController::class, 'create'])->name('create');
     Route::get('/{role}/role', [RoleController::class, 'show'])->name('details');
     Route::post('/{role}/role', [RoleController::class, 'assign'])->name('assign-permssion');
+    Route::delete('/{role}', [RoleController::class, 'destory'])->name('destory');
     Route::delete('/{role}/role/{permission}/permission',[RoleController::class, 'revoke'])->name('revoke-permission');
 
 });
