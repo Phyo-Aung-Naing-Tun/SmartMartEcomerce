@@ -19,11 +19,22 @@
                         @csrf
                         @method('DELETE')
                         <div class=" capitalize  pl-4 pr-10 py-1 rounded-[5px] border bg-[#2f54cd] relative text-white">
-                            {{str_replace('-', " ",  $permission->name)}} <button type="button" data-modal-target="popup-modal" data-modal-toggle="popup-modal"
+                            {{str_replace('-', " ",  $permission->name)}} <button type="button" data-modal-target="{{ $permission->name }}" data-modal-toggle="{{ $permission->name }}"
                                 class=" hover:bg-blue-300 shadow-lg absolute border border-[#2f54cd] px-1 top-0 bottom-0 right-0  bg-white ">
                                 <img class="w-5" src="{{ asset('images/delete-icon.svg') }}" alt=""> </button>
                         </div>
-                        <x-confirm-modal isDeleteModal="true" text="Are You Sure to Revoke Permission" ></x-confirm-modal>
+                        <x-custom-modal modalName="{{ $permission->name }}" title='' >
+                            <img class=" select-none mx-auto mb-4" src="{{ asset('images/delete-icon.svg') }}" alt="">
+                                        <h1 class=" select-none text-center text-red-400 font-[500] text-[18px]">Are you sure to revoke {{ $permission->name }} permission?</h1>
+                                        <form action="{{ route('roles.revoke-permission',['role' => $role, 'permission' => $permission]) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <div class="flex justify-center gap-3 items-center mt-5">
+                                                <x-delete-button>Confirm</x-delete-button>
+                                                <x-secondary-button data-modal-hide="{{ $permission->name }}">Cancle</x-secondary-button>
+                                            </div>
+                                        </form>
+                        </x-custom-modal>
                     </form>
                 @endforeach
             </div>  

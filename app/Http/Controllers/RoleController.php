@@ -64,8 +64,7 @@ class RoleController extends Controller
 
     public function destory(Role $role){
         try{
-            // $role->delete();
-            dd($role);
+            $role->delete();
             return Redirect::back()->with('success' , 'Deleted Role Successfully' );
            }catch(Exception $e){
                 return Redirect::back()->with('error' , $e->getMessage());

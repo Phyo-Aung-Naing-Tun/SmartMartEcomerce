@@ -1,11 +1,11 @@
 <x-app-layout>
     <div class=" p-3 bg-white min-w-full h-screen">
-        <x-custom-modal>
+        <x-custom-modal modalName="addRole"  title="Add Role">
             <form action="{{ route('roles.create') }}" method="POST">
                 @csrf
                 <x-text-input  name="role" class="mt-5 rounded-[5px] mb-3 "></x-text-input>
                 <x-primary-button>Add</x-primary-button>
-                <x-secondary-button  data-modal-hide="custom-modal">Cancle</x-secondary-button>
+                <x-secondary-button  data-modal-hide="addRole">Cancle</x-secondary-button>
             </form>
         </x-custom-modal>
         <div>
@@ -49,7 +49,7 @@
                         </div>
                        </div>
                         <div>
-                            <x-primary-button type="button" data-modal-target="custom-modal" data-modal-toggle="custom-modal">Add Role </x-primary-button>
+                            <x-primary-button type="button" data-modal-target="addRole" data-modal-toggle="addRole">Add Role </x-primary-button>
                         </div>
                     </div>
                     <table class="w-full text-sm mt-[30px] shadow-md rounded-xl overflow-hidden text-left rtl:text-right text-gray-500 ">
@@ -105,14 +105,21 @@
                                 {{ $role->updated_at }}
                             </td>
                             <td>
-                                <form action="{{ route('roles.destory',$role) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <x-confirm-modal isDeleteModal="true" text="Are you sure to delete this role!"></x-confirm-modal>
-                                </form>
                                <div class=" flex items-center justify-center gap-3">
                                 <x-icon-button href="{{ route('roles.details',  $role) }}"><img class="w-6" src="{{ asset('images/edit-icon.svg') }}" alt="edti"></x-icon-button>
-                                <x-icon-button data-modal-target="popup-modal" data-modal-toggle="popup-modal"><img class="w-6 cursor-pointer" src="{{ asset('images/delete-icon.svg') }}" alt="edti"></x-icon-button>
+                                <x-icon-button data-modal-target="{{$role->name }}" data-modal-toggle="{{$role->name}}"><img class="w-6 cursor-pointer" src="{{ asset('images/delete-icon.svg') }}" alt="edti"></x-icon-button>
+                                    <x-custom-modal modalName="{{ $role->name }}" title="">
+                                        <img class=" select-none mx-auto mb-4" src="{{ asset('images/delete-icon.svg') }}" alt="">
+                                        <h1 class=" select-none text-center text-red-400 font-[500] text-[18px]">Are you sure to delete {{ $role->name }} role?</h1>
+                                        <form action="{{ route('roles.destory',$role) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <div class="flex justify-center gap-3 items-center mt-5">
+                                                <x-delete-button>Confirm</x-delete-button>
+                                                <x-secondary-button data-modal-hide="{{ $role->name }}">Cancle</x-secondary-button>
+                                            </div>
+                                        </form>
+                                    </x-custom-modal>
                                </div>
                             </td>
                         </tr>
